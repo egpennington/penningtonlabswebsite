@@ -1,126 +1,18 @@
-# Pennington Labs
+# Pennington Labs — Launch Site
 
-**Software built for the real world.**
+A static, responsive site ready for Netlify. No build step or dependencies.
 
-Official website for **Pennington Labs**, an independent software development studio focused on building practical, intuitive applications that solve everyday problems.
+## Deploy
+1. Review the two Insights articles before making them public; they are starter drafts.
+2. Drag this folder (or its extracted contents) to Netlify Drop, or connect a Git repository with publish directory `.` and no build command.
+3. In Netlify, add `penningtonlabs.com` under Domain management. Follow the DNS records Netlify provides. Preserve existing MX/TXT email and Google verification records at Porkbun.
+4. After deployment, open Netlify Forms and confirm that the `contact` form was detected. Enable form detection if needed and redeploy. Configure email notifications for submissions.
+5. Send a test message and verify it arrives in Netlify Forms and the thank-you page loads.
+6. When TipCalc goes live, replace the coming-soon text in index.html with its real Google Play link.
 
-🌐 **Website:** [penningtonlabs.com](https://penningtonlabs.com)
+## Notes
+- Contact form requires Netlify hosting to work; it won't submit from local file previews.
+- The site intentionally omits a newsletter subscription until a mailing-list workflow and privacy notice are in place.
+- Header/icon are derived from the user-provided artwork; replace with original high-resolution assets if available.
 
----
-
-## Overview
-
-This repository contains the source code for the Pennington Labs website.
-
-The site serves as the central home for our software projects, development insights, and future product releases.
-
-Designed to be lightweight, responsive, and easy to maintain, the website provides a foundation for continued growth.
-
-## Features
-
-- **Responsive Design** — Optimized for desktop, tablet, and mobile devices.
-- **Product Showcase** — Information about applications developed by Pennington Labs.
-- **Insights & Articles** — Writing about software development, productivity, AI-assisted programming, and problem-solving.
-- **Contact Page** — Visitor inquiries through Netlify Forms.
-- **Merchandise Showcase** — Developer-inspired apparel and accessories, with future storefront integration.
-- **Brand Identity** — Consistent Pennington Labs typography, colors, logos, and favicons.
-
-## Featured Application
-
-### TipCalc
-
-A simple, intuitive Android application designed to make calculating tips fast and convenient.
-
-Features include:
-
-- One-tap tip percentage selection
-- Instant bill, tip, and total calculations
-- Easy comparison between tip percentages
-- Responsive portrait and landscape layouts
-- Clear, readable results
-
-**Platform:** Android  
-**Distribution:** Google Play
-
-## Technology Stack
-
-| Technology | Purpose |
-|---|---|
-| HTML5 | Semantic page structure |
-| CSS3 | Styling and responsive layouts |
-| JavaScript | Lightweight client-side functionality |
-| Netlify | Hosting, deployment, and form handling |
-| GitHub | Version control and source management |
-| Porkbun | Domain registration and DNS management |
-
-The website intentionally avoids unnecessary frameworks and dependencies.
-
-## Local Development
-
-Clone the repository:
-
-```bash
-git clone https://github.com/egpennington/penningtonlabswebsite.git
-```
-
-Navigate into the project directory:
-
-```bash
-cd penningtonlabswebsite
-```
-
-Open the project in VS Code:
-
-```bash
-code .
-```
-
-For basic development, open `index.html` in your browser or use the VS Code Live Server extension.
-
-No build process or package installation is required.
-
-> Note: Netlify Forms must be tested on a deployed Netlify site.
-
-## Deployment
-
-The website is designed for continuous deployment through Netlify.
-
-1. Connect the GitHub repository to Netlify.
-2. Select the production branch (`main`).
-3. Leave the build command empty.
-4. Set the publish directory to the repository root (`.`).
-5. Deploy the site.
-6. Configure `penningtonlabs.com` as the custom domain.
-
-Future pushes to the production branch automatically trigger a new deployment when continuous deployment is enabled.
-
-## Roadmap
-
-Planned enhancements include:
-
-- [ ] Full product portfolio and individual application pages
-- [ ] Blog publishing system with administrative dashboard
-- [ ] Expanded development and productivity articles
-- [ ] Merchandise storefront integration
-- [ ] Additional Google Play application showcases
-- [ ] Improved SEO and accessibility
-
-## Development Philosophy
-
-At Pennington Labs, software development begins with understanding the problem.
-
-We believe useful software should be approachable, dependable, and designed around real needs.
-
-Our development approach combines practical engineering, continuous learning, thoughtful design, and modern AI-assisted workflows.
-
-**Build with purpose. Keep learning. Ship useful software.**
-
-## Contact
-
-Visit [penningtonlabs.com](https://penningtonlabs.com) for information about our projects and ways to get in touch.
-
----
-
-© 2026 Pennington Labs. All rights reserved.
-
-*Software built for the real world.*
+Merch gallery: original shirt photographs included with user permission; other two cards are clearly marked design ideas. No live storefront link yet. Add the actual Crowdmade URL only when ready.
