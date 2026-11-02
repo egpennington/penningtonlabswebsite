@@ -58,3 +58,8 @@ html[data-theme="light"] .article a:not(.back){color:#145da6}
 .merch-shop-footer{margin-top:28px;padding:30px;border:1px solid var(--border, #60738b);border-radius:16px;text-align:center}
 .merch-shop-footer p{margin-bottom:20px}
 @media(max-width:760px){.merch-products{grid-template-columns:1fr}.merch-product img{max-height:420px}}
+
+/* Keep page headings readable in light mode (Insights and other interior pages). */
+html[data-theme="light"] .page-heading h1 { color: #102748; }
+html[data-theme="light"] .page-heading .lead { color: #455e7b; }
+html[data-theme="light"] .page-heading .eyebrow { color: #1764b2; }
