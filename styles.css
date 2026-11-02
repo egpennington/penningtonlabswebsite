@@ -34,3 +34,14 @@ html[data-theme="light"] .article,html[data-theme="light"] .article p,html[data-
 html[data-theme="light"] .article blockquote{color:#284a73}
 html[data-theme="light"] input,html[data-theme="light"] textarea{background:#fff;color:#20334e;border-color:#9db7d7}
 @media(max-width:650px){.nav{flex-wrap:wrap;padding:10px 0}.links{flex-wrap:wrap;gap:12px}.theme-toggle{font-size:.8rem;padding:6px 9px}}
+
+/* Breakthrough Thinking article comparison tables */
+.article-table-wrap{overflow-x:auto;margin:24px 0 34px;border:1px solid var(--line);border-radius:12px}
+.article-table{border-collapse:collapse;width:100%;min-width:560px;font-size:.94rem}
+.article-table th,.article-table td{text-align:left;vertical-align:top;padding:13px 16px;border-bottom:1px solid var(--line)}
+.article-table th{color:#fff;background:#153355;font-weight:750}
+.article-table td:first-child{font-weight:700;width:31%}
+.article-table tr:last-child td{border-bottom:0}
+.article a:not(.back){color:#89bdff;text-decoration:underline;text-underline-offset:3px}
+html[data-theme="light"] .article-table th{background:#e0edfd;color:#173556}
+html[data-theme="light"] .article a:not(.back){color:#145da6}
