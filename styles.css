@@ -12,3 +12,25 @@
 .article-figure img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid #284665;background:#fff}
 .article-figure figcaption{margin-top:10px;color:#9baec7;font-size:.87rem;text-align:center}
 .principles{padding-left:1.5rem}.principles li{margin:0 0 16px;padding-left:5px}.principles strong{color:#fff}
+
+/* Theme switcher: dark is the original Pennington Labs palette. */
+.theme-toggle{border:1px solid #4978b2;border-radius:9px;background:transparent;color:#eaf3ff;padding:8px 12px;white-space:nowrap;font-size:.85rem}
+.theme-toggle:focus-visible{outline:3px solid #55a3ff;outline-offset:3px}
+html[data-theme="light"]{--navy:#f7faff;--navy2:#e9f1fc;--text:#20334e;--muted:#536a87;--line:#c6d7ea}
+html[data-theme="light"] body{background:#f7faff;color:#20334e}
+html[data-theme="light"] .site-header{background:rgba(247,250,255,.97);border-bottom-color:#d3e0ee}
+html[data-theme="light"] .brand,html[data-theme="light"] .links a,html[data-theme="light"] .links a[aria-current=page],html[data-theme="light"] .links .nav-cta{color:#152c4d}
+html[data-theme="light"] .links .nav-cta,html[data-theme="light"] .theme-toggle{border-color:#9db7d7;color:#152c4d}
+html[data-theme="light"] .hero{background:radial-gradient(ellipse at 80% 25%,#d4e6ff 0%,transparent 48%),linear-gradient(135deg,#f7faff,#e8f1ff)}
+html[data-theme="light"] .hero h1,html[data-theme="light"] .section-title,html[data-theme="light"] .panel h3{color:#102748}
+html[data-theme="light"] .hero h1 span{color:#0878ff}
+html[data-theme="light"] .lead,html[data-theme="light"] .section-intro,html[data-theme="light"] .panel p{color:#455e7b}
+html[data-theme="light"] .section.alt{background:#edf4ff}
+html[data-theme="light"] .panel{background:#fff;border-color:#cbdcef}
+html[data-theme="light"] .pill{background:#e9f2ff;border-color:#a5c5eb;color:#18558d}
+html[data-theme="light"] .btn.secondary{color:#153c69}
+html[data-theme="light"] .footer{background:#edf4ff;color:#334e6b;border-top-color:#cbdcef}
+html[data-theme="light"] .article,html[data-theme="light"] .article p,html[data-theme="light"] .article h2,html[data-theme="light"] .article h3{color:#20334e}
+html[data-theme="light"] .article blockquote{color:#284a73}
+html[data-theme="light"] input,html[data-theme="light"] textarea{background:#fff;color:#20334e;border-color:#9db7d7}
+@media(max-width:650px){.nav{flex-wrap:wrap;padding:10px 0}.links{flex-wrap:wrap;gap:12px}.theme-toggle{font-size:.8rem;padding:6px 9px}}
