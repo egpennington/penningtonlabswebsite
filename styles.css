@@ -63,3 +63,11 @@ html[data-theme="light"] .article a:not(.back){color:#145da6}
 html[data-theme="light"] .page-heading h1 { color: #102748; }
 html[data-theme="light"] .page-heading .lead { color: #455e7b; }
 html[data-theme="light"] .page-heading .eyebrow { color: #1764b2; }
+
+/* Fix blog article lists in light mode */
+html:not([data-theme="dark"]) article ol,
+html:not([data-theme="dark"]) article ul,
+html:not([data-theme="dark"]) article li,
+html:not([data-theme="dark"]) article li strong {
+  color: #102a50;
+}
