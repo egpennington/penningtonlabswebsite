@@ -93,3 +93,10 @@ html:not([data-theme="dark"]) article li strong {
 .portfolio-mobile-links{display:none}
 @media(max-width:900px){.portfolio-tooltip{font-size:10px;padding:6px}.portfolio-mobile-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.portfolio-mobile-links a,.portfolio-mobile-links span{font-size:.82rem;padding:5px 9px;border:1px solid var(--line);border-radius:8px}.portfolio-mobile-links a{color:#83bfff}html[data-theme="light"] .portfolio-mobile-links a{color:#145da6}}
 @media(hover:none){.portfolio-tooltip{display:none}}
+
+/* Sprint 02: one full-width interactive portfolio instead of duplicate TipCalc card */
+#apps .portfolio-grid{grid-template-columns:minmax(0,1fr)}
+#apps .portfolio-panel{padding:clamp(18px,3vw,30px)}
+#apps .portfolio-map{max-width:100%;margin-inline:auto}
+#apps .portfolio-tooltip{font-size:clamp(12px,1.25vw,16px);padding:10px 12px}
+@media(max-width:650px){#apps .portfolio-tooltip{font-size:10px;padding:6px}}
