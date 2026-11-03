@@ -71,3 +71,25 @@ html:not([data-theme="dark"]) article li,
 html:not([data-theme="dark"]) article li strong {
   color: #102a50;
 }
+/* Sprint 01: clickable app collage in the home page product card */
+.play-store-link{margin-top:2px}
+.portfolio-panel{padding:18px;min-width:0}
+.portfolio-panel .portfolio-heading{margin:14px 0 6px}
+.portfolio-panel>p{margin:8px 0 14px}
+.portfolio-map{position:relative;width:100%;overflow:visible;border-radius:12px;margin-top:12px}
+.portfolio-map>img{display:block;width:100%;height:auto;border-radius:12px}
+.portfolio-hotspot{position:absolute;display:block;cursor:pointer;border-radius:10px;outline-offset:-3px}
+.portfolio-hotspot:focus-visible{outline:3px solid #fff;box-shadow:0 0 0 5px #0878ff}
+.hotspot-rapidplan{left:0;top:15%;width:37%;height:38%}
+.hotspot-staystrong{left:35%;top:15%;width:34%;height:38%}
+.hotspot-agepro{left:68%;top:15%;width:32%;height:38%}
+.hotspot-garagesale{left:0;top:52%;width:35%;height:38%}
+.hotspot-tipcalc{left:34%;top:52%;width:34%;height:38%}
+.hotspot-foamcalc{left:67%;top:52%;width:33%;height:38%}
+.portfolio-disabled{cursor:default}
+.portfolio-tooltip{position:absolute;z-index:3;bottom:8%;left:4%;width:92%;padding:9px 10px;border-radius:9px;background:rgba(5,18,39,.94);color:#fff;font-size:clamp(10px,1.05vw,13px);line-height:1.35;box-shadow:0 6px 18px #0007;opacity:0;visibility:hidden;transform:translateY(4px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none}
+.portfolio-hotspot:hover .portfolio-tooltip,.portfolio-hotspot:focus-visible .portfolio-tooltip{opacity:1;visibility:visible;transform:translateY(0)}
+.portfolio-help{font-size:.8rem;line-height:1.5}
+.portfolio-mobile-links{display:none}
+@media(max-width:900px){.portfolio-tooltip{font-size:10px;padding:6px}.portfolio-mobile-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.portfolio-mobile-links a,.portfolio-mobile-links span{font-size:.82rem;padding:5px 9px;border:1px solid var(--line);border-radius:8px}.portfolio-mobile-links a{color:#83bfff}html[data-theme="light"] .portfolio-mobile-links a{color:#145da6}}
+@media(hover:none){.portfolio-tooltip{display:none}}
