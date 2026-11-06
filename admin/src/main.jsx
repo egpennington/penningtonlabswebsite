@@ -56,6 +56,7 @@ function findImageAtCursor(body,start,end){
 function App(){
  const [user,setUser]=React.useState(undefined),[email,setEmail]=React.useState(''),[password,setPassword]=React.useState(''),[loginError,setLoginError]=React.useState('');
  const [view,setView]=React.useState('dashboard'),[posts,setPosts]=React.useState([]),[form,setForm]=React.useState(blank()),[baseline,setBaseline]=React.useState(''),[selected,setSelected]=React.useState(null),[filter,setFilter]=React.useState(''),[mode,setMode]=React.useState('write'),[busy,setBusy]=React.useState(false),[notice,setNotice]=React.useState(''),[error,setError]=React.useState('');
+ const [deleteTarget,setDeleteTarget]=React.useState(null),[deletePhrase,setDeletePhrase]=React.useState('');
  const textareaRef=React.useRef(null);
  const imageRange=React.useRef(null);
  const [imageOpen,setImageOpen]=React.useState(false);
@@ -72,12 +73,14 @@ function App(){
  const editPost=(p)=>run(async()=>{if(dirty&&!confirm('Discard unsaved changes?'))return;const d=await api(user,'GET','posts?slug='+encodeURIComponent(p.slug)+'&status='+encodeURIComponent(p.status));const loaded={...blank(),...d.post,originalSlug:p.slug};setForm(loaded);setBaseline(JSON.stringify(loaded));setSelected(p);setMode('write');setView('editor')});
  const field=(name,value)=>setForm(p=>({...p,[name]:value,...(name==='title'&&!p.originalSlug?{slug:slugify(value)}:{})}));
  const save=(status)=>run(async()=>{if(!form.title.trim()||!form.slug.trim())throw Error('Enter a title and URL slug');const data={...form,status,previousStatus:selected?.status||null};const result=await api(user,'POST','posts',data);const updated={...data,originalSlug:result.slug||data.slug};setForm(updated);setBaseline(JSON.stringify(updated));setSelected({slug:updated.slug,status});setNotice(status==='published'?'Published to GitHub. Netlify will deploy the article shortly.':'Draft saved in the private draft repository.');const d=await api(user,'GET','posts');setPosts(d.posts||[])});
+  const closeDelete=()=>{if(busy)return;setDeleteTarget(null);setDeletePhrase('');setError('')};
   const deletePost=(p)=>{
     if(!p||busy)return;
-    const title=p.title||p.slug;
-    const location=p.status==='draft'?'private drafts repository':'website repository';
-    const phrase=prompt(`Delete “${title}” from the ${location}?\n\nType DELETE to confirm. Git history retains earlier versions.`);
-    if(phrase!=='DELETE')return;
+    setError('');setDeletePhrase('');setDeleteTarget(p);
+  };
+  const confirmDelete=()=>{
+    if(!deleteTarget||deletePhrase!=='DELETE'||busy)return;
+    const p=deleteTarget;
     run(async()=>{
       await api(user,'DELETE','posts',{slug:p.slug,status:p.status});
       const d=await api(user,'GET','posts');
@@ -85,10 +88,17 @@ function App(){
       if(view==='editor'&&selected?.slug===p.slug){
         const b=blank();setForm(b);setBaseline(JSON.stringify(b));setSelected(null);setView('posts');
       }
+      setDeleteTarget(null);setDeletePhrase('');
       setNotice('Article deleted from its repository. Git history retains earlier versions.');
     });
   };
   const remove=()=>{if(selected)deletePost({...selected,title:form.title})};
+  React.useEffect(()=>{
+    if(!deleteTarget)return;
+    const onKeyDown=e=>{if(e.key==='Escape'&&!busy){setDeleteTarget(null);setDeletePhrase('');setError('')}};
+    document.addEventListener('keydown',onKeyDown);
+    return ()=>document.removeEventListener('keydown',onKeyDown);
+  },[deleteTarget,busy]);
  const insert=(before,after='')=>{const el=textareaRef.current;const start=el?.selectionStart??form.body.length,end=el?.selectionEnd??start,txt=form.body;const selectedTxt=txt.slice(start,end);field('body',txt.slice(0,start)+before+selectedTxt+after+txt.slice(end));setTimeout(()=>{el?.focus();el?.setSelectionRange(start+before.length,start+before.length+selectedTxt.length)},0)};
  const openImageEditor=()=>{
   const el=textareaRef.current,start=el?.selectionStart??form.body.length,end=el?.selectionEnd??start;
@@ -121,6 +131,22 @@ function App(){
  {view==='posts'&&<><div className="title-row"><div><p className="eyebrow">CONTENT LIBRARY</p><h1>All Blog Posts</h1><p>Open a post to read or update it.</p></div><button onClick={newPost}>＋ New Blog Post</button></div><input aria-label="Search posts" placeholder="Search by title, category or status…" value={filter} onChange={e=>setFilter(e.target.value)}/><PostTable posts={visible} onEdit={editPost} onDelete={deletePost} busy={busy}/></>}
  {view==='editor'&&<><div className="title-row"><div><p className="eyebrow">{selected?'EDIT ARTICLE':'NEW ARTICLE'}</p><h1>{selected?'Edit Blog Post':'Create Blog Post'}</h1><p>{dirty?'● Unsaved changes':'All changes saved or no changes yet'}</p></div><div className="actions"><button className="secondary" disabled={busy} onClick={()=>save('draft')}>Save Draft</button><button disabled={busy} onClick={()=>save('published')}>Publish</button></div></div><div className="editor-grid"><div className="edit-main"><label>Article title<input value={form.title} onChange={e=>field('title',e.target.value)} placeholder="Enter your article title…"/></label><div className="two"><label>Category<select value={form.category} onChange={e=>field('category',e.target.value)}>{['Coding Productivity','Breakthrough Thinking','Development Notes','Reading & Reflections'].map(x=><option key={x}>{x}</option>)}</select></label><label>Date<input type="date" value={form.date} onChange={e=>field('date',e.target.value)}/></label></div><div className="tabs"><button className={mode==='write'?'active':''} onClick={()=>setMode('write')}>Write</button><button className={mode==='preview'?'active':''} onClick={()=>setMode('preview')}>Preview</button></div>{mode==='write'?<><div className="toolbar"><button title="Bold" onClick={()=>insert('**','**')}><b>B</b></button><button title="Italic" onClick={()=>insert('*','*')}><i>I</i></button><button title="Heading" onClick={()=>insert('\n## ')}>H2</button><button title="List" onClick={()=>insert('\n- ')}>☷</button><button title="Link" onClick={()=>insert('[','](https://example.com)')}>🔗</button><button title="Insert image or edit image at cursor" onClick={openImageEditor}>▧ Image</button></div><textarea ref={textareaRef} className="writer" spellCheck value={form.body} onChange={e=>field('body',e.target.value)} placeholder="## Your first heading\n\nStart writing…"/></>:<div className="preview"><h1>{form.title||'Untitled'}</h1><p className="meta">{form.category} · {form.date}</p><div dangerouslySetInnerHTML={{__html:DOMPurify.sanitize(formatImages(marked.parse(form.body||'*Nothing to preview yet.*')))}}/></div>}<label>Summary (Insights card)<textarea rows="3" value={form.excerpt} onChange={e=>field('excerpt',e.target.value)} placeholder="One or two sentences describing this article"/></label></div><aside className="settings"><h3>Publish settings</h3><label>URL slug<input value={form.slug} onChange={e=>field('slug',slugify(e.target.value))} disabled={!!form.originalSlug}/></label><p className="hint">{form.originalSlug?'Published URL is locked to protect existing links.':'Generated from title; edit before first save.'}</p><p className="hint">/insights/{form.slug||'article-title'}/</p><label>Featured image URL (optional)<input value={form.featuredImage} onChange={e=>field('featuredImage',e.target.value)} placeholder="/assets/blog/photo.png"/></label><p className="hint">For inline images, place your cursor in the editor and click Image.</p><div className="stack"><button className="secondary" disabled={busy} onClick={()=>save('draft')}>Save Draft</button><button disabled={busy} onClick={()=>save('published')}>Publish / Update</button>{selected?.status==='published'&&<button className="secondary" disabled={busy} onClick={()=>save('draft')}>Unpublish</button>}{selected&&<button className="danger" disabled={busy} onClick={remove}>Delete Post</button>}</div></aside></div></>}
 
+ {deleteTarget&&<div className="delete-confirm-overlay" onMouseDown={e=>{if(e.target===e.currentTarget)closeDelete()}}>
+   <form className="delete-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="delete-confirm-title" aria-describedby="delete-confirm-description" onSubmit={e=>{e.preventDefault();confirmDelete()}}>
+     <div className="delete-confirm-icon" aria-hidden="true">🗑</div>
+     <h2 id="delete-confirm-title">Delete this article?</h2>
+     <p id="delete-confirm-description">You're about to delete <strong>{deleteTarget.title||deleteTarget.slug}</strong> from the {deleteTarget.status==='draft'?'private drafts repository':'website repository'}.</p>
+     <p className="delete-confirm-warning">The article will be removed from the site after deployment. Previous versions remain in Git history, but there's no undo button in the Control Center.</p>
+     <label htmlFor="delete-confirm-input">Type <code>DELETE</code> to confirm
+       <input id="delete-confirm-input" autoFocus autoComplete="off" spellCheck={false} value={deletePhrase} onChange={e=>setDeletePhrase(e.target.value)} placeholder="Type DELETE here" />
+     </label>
+     {error&&<p className="error" role="alert">{error}</p>}
+     <div className="delete-confirm-actions">
+       <button type="button" className="secondary" disabled={busy} onClick={closeDelete}>Cancel</button>
+       <button type="submit" className="danger" disabled={busy||deletePhrase!=='DELETE'}>{busy?'Deleting…':'Delete article'}</button>
+     </div>
+   </form>
+ </div>}
  {imageOpen&&<div className="image-modal-overlay" role="presentation" onMouseDown={e=>{if(e.target===e.currentTarget)setImageOpen(false)}}><section className="image-modal" role="dialog" aria-modal="true" aria-labelledby="image-dialog-heading"><h2 id="image-dialog-heading">Insert / Edit Image</h2><p className="hint">Place the cursor inside an existing image's Markdown to change its size or caption.</p><label>Upload image (optional)<input type="file" accept="image/png,image/jpeg,image/webp,image/gif" onChange={e=>setImageFile(e.target.files?.[0]||null)}/></label><label>Image URL<input value={imageDetails.url} onChange={e=>setImageDetails(p=>({...p,url:e.target.value}))} placeholder="/assets/blog/diagram.png" /></label><label>Alt text<input value={imageDetails.alt} onChange={e=>setImageDetails(p=>({...p,alt:e.target.value}))} placeholder="Describe the image for screen readers" /></label><label>Image size<select value={imageDetails.size} onChange={e=>setImageDetails(p=>({...p,size:e.target.value}))}><option value="small">Small (360px)</option><option value="medium">Medium (720px)</option><option value="large">Large (full article width)</option></select></label><label>Caption (optional)<input value={imageDetails.caption} onChange={e=>setImageDetails(p=>({...p,caption:e.target.value}))} placeholder="Shown beneath the image" /></label><div className="image-modal-actions"><button className="secondary" onClick={()=>setImageOpen(false)} disabled={busy}>Cancel</button><button onClick={applyImage} disabled={busy||(!imageFile&&!imageDetails.url.trim())}>{busy?'Working…':'Insert / Update Image'}</button></div></section></div>}
  </main></div></div>;
 }
