@@ -115,3 +115,44 @@ html:not([data-theme="dark"]) article li strong {
 html[data-theme="light"] .merch-home-image{border-color:#cadcf0;box-shadow:0 14px 40px rgba(18,46,86,.13)}
 @media(max-width:780px){.merch-home-grid{grid-template-columns:1fr;gap:26px}.merch-home-image{max-width:600px}.merch-home-copy .actions{margin-top:20px}}
 @media(prefers-reduced-motion:reduce){.merch-home-image{transition:none}}
+
+/* Sprint 3 polish: persistent header throughout the public website */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+/* Prevent an anchored section heading from hiding behind the sticky navbar. */
+html { scroll-padding-top: 100px; }
+
+/* Clear contrast for generated Markdown article lists in either theme. */
+.article ul li, .article ol li, .article li > p, .article li::marker { color: #c0cee0; }
+html[data-theme="light"] .article ul li,
+html[data-theme="light"] .article ol li,
+html[data-theme="light"] .article li > p,
+html[data-theme="light"] .article li::marker { color: #20334e; }
+/* Links inside list items still use existing article-link styles. */
+
+/* Blog article image styling */
+.article img {
+  display: block;
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+  margin: 2rem auto;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+/* Inline Markdown article image sizes: default images remain responsive. */
+.article img { display:block; max-width:100%; width:auto; height:auto; margin:1.75rem auto; object-fit:contain; border-radius:12px; }
+.article > p > img { width:100%; max-width:720px; }
+.article .blog-figure { margin:2rem auto; max-width:100%; text-align:center; }
+.article .blog-figure img { display:block; width:100%; max-width:100%; height:auto; margin:0 auto; }
+.article .blog-figure.size-small { width:min(100%,360px); }
+.article .blog-figure.size-medium { width:min(100%,720px); }
+.article .blog-figure.size-large { width:100%; }
+.article .blog-figure figcaption { margin-top:.7rem; font-size:.9rem; line-height:1.5; color:var(--muted, #8096b5); }
+/* Consistent width on either article theme. */
