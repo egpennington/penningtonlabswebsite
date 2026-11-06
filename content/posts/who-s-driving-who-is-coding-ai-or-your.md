@@ -15,6 +15,6 @@ status: published
 
 
 
-![quadModel](/assets/blog/quadmodel-84b13aba-afb.jpg)
+![quadModel](/assets/blog/quadmodel-84b13aba-afb.jpg "pl:size=small;caption=")
 
 ## If you can't learn, how will you grow?
