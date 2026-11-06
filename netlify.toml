@@ -21,3 +21,6 @@
   for = "/.netlify/functions/*"
   [headers.values]
     Cache-Control = "no-store"
+
+[functions]
+node_bundler = "esbuild"
