@@ -145,3 +145,14 @@ html[data-theme="light"] .article li::marker { color: #20334e; }
   border-radius: 12px;
   object-fit: contain;
 }
+
+/* Inline Markdown article image sizes: default images remain responsive. */
+.article img { display:block; max-width:100%; width:auto; height:auto; margin:1.75rem auto; object-fit:contain; border-radius:12px; }
+.article > p > img { width:100%; max-width:720px; }
+.article .blog-figure { margin:2rem auto; max-width:100%; text-align:center; }
+.article .blog-figure img { display:block; width:100%; max-width:100%; height:auto; margin:0 auto; }
+.article .blog-figure.size-small { width:min(100%,360px); }
+.article .blog-figure.size-medium { width:min(100%,720px); }
+.article .blog-figure.size-large { width:100%; }
+.article .blog-figure figcaption { margin-top:.7rem; font-size:.9rem; line-height:1.5; color:var(--muted, #8096b5); }
+/* Consistent width on either article theme. */
