@@ -134,3 +134,14 @@ html[data-theme="light"] .article ol li,
 html[data-theme="light"] .article li > p,
 html[data-theme="light"] .article li::marker { color: #20334e; }
 /* Links inside list items still use existing article-link styles. */
+
+/* Blog article image styling */
+.article img {
+  display: block;
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+  margin: 2rem auto;
+  border-radius: 12px;
+  object-fit: contain;
+}
