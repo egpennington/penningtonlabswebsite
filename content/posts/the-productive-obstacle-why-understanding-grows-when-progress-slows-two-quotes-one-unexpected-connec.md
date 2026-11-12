@@ -32,6 +32,8 @@ But I began to wonder whether they were describing the same underlying principle
 
 That question led me back to my Coding Productivity Model.
 
+![coding productivity model](/assets/blog/quadmodel-b68f0d65-83b.jpg "pl:size=medium;caption=Coding%20Productivity%20Model")
+
 ## Speed Is Not the Same as Progress
 
 Modern development tools allow us to create software at astonishing speeds.
